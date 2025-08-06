@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  product-service:
+    image: zulfiqarhussain/product-service:latest
+    ports:
+      - "8884:8884"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/productdb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=ironfish54
+    depends_on:
+      - mysql
+  
+  order-service:
+    image: zulfiqarhussain/order-service:latest
+    ports:
+      - "8883:8883"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/orderdb
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=ironfish54
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
