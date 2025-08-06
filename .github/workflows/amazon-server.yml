@@ -36,6 +36,6 @@ jobs:
 
     - name: Build and Push Docker image
       run: |
-        cd product-service
-        docker build -t zulfiqarhussain/product-service:latest .
-        docker push zulfiqarhussain/product-service:latest
+        cd amazon-server
+        docker build -t zulfiqarhussain/amazon-server:latest .
+        docker push zulfiqarhussain/amazon-server:latest
