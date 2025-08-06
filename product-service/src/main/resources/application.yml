@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: your-service-name  # e.g., product-service
+    name: product-service  # e.g., product-service
   config:
     import: optional:configserver:http://localhost:8884  # Optional: if using Spring Cloud Config
 
