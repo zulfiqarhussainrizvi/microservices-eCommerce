@@ -9,9 +9,11 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/productdb
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=ironfish54
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://amazon-server:8761/eureka
     depends_on:
       - mysql
-  
+      - eureka-server
+
   order-service:
     image: zulfiqarhussain/order-service:latest
     ports:
@@ -20,12 +22,19 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/orderdb
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=ironfish54
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://amazon-server:8761/eureka
     depends_on:
       - mysql
+      - eureka-server
+
+  eureka-server:
+    image: zulfiqarhussain/amazon-server:latest
+    ports:
+      - "8761:8761"
 
   mysql:
     image: mysql:8
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: ironfish54
     ports:
       - "3306:3306"
