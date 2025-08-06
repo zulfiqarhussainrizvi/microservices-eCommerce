@@ -11,6 +11,7 @@ public class AmazonServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AmazonServerApplication.class, args);
 		System.out.println("Eureka Server is running...");
+		//finally ho gaya
 		
 	}
 
