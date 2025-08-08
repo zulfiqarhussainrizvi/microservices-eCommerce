@@ -1,19 +1,17 @@
 server:
-  port: 8885  # Change this per service
+  port: 8885
 
 spring:
   application:
-    name: productService  # e.g., product-service
-  config:
-    import: optional:configserver:http://localhost:8884  # Optional: if using Spring Cloud Config
+    name: product-service
 
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka/  # Eureka server URL
+      defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
-    hostname: localhost
-
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}:${server.port}
