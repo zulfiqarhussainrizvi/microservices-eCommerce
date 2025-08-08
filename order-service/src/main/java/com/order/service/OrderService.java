@@ -21,8 +21,8 @@ public class OrderService {
 	private ProductClient productClient;
 	
 	
-	@Retry(name = "product-service")
-    @CircuitBreaker(name = "product-service", fallbackMethod = "fallbackProduct")
+	@Retry(name = "PRODUCT-SERVICE")
+    @CircuitBreaker(name = "PRODUCT-SERVICE", fallbackMethod = "fallbackProduct")
 	public Order placeOrder(Long productId, Order order) {		
 		ProductDto productDto=productClient.getProductByIdForFeign(productId);
 		double price = productDto.getPrice();		
