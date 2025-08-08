@@ -35,7 +35,7 @@ services:
     image: zulfiqarhussain/product-service:latest
     container_name: product-service
     ports:
-      - "8885:8885"
+      - "8884:8884"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/productdb
       - SPRING_DATASOURCE_USERNAME=root
