@@ -7,7 +7,9 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ironfish54
-      MYSQL_DATABASE: productdb
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql    
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
@@ -16,18 +18,24 @@ services:
 
   amazon-server:
     image: zulfiqarhussain/amazon-server:latest
+    container_name: amazon-server
     ports:
       - "8761:8761"
+    environment:
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=false
+      - EUREKA_INSTANCE_HOSTNAME=amazon-server
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8761/eureka/apps"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 20
+    restart: always
 
   product-service:
     image: zulfiqarhussain/product-service:latest
+    container_name: product-service
     ports:
-      - "8884:8884"
+      - "8885:8885"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/productdb
       - SPRING_DATASOURCE_USERNAME=root
@@ -42,6 +50,7 @@ services:
 
   order-service:
     image: zulfiqarhussain/order-service:latest
+    container_name: order-service
     ports:
       - "8883:8883"
     environment:
@@ -54,4 +63,9 @@ services:
         condition: service_healthy
       amazon-server:
         condition: service_healthy
+      product-service:
+        condition: service_started
     restart: always
+
+volumes:
+  mysql_data:
