@@ -18,16 +18,22 @@ jobs:
         distribution: temurin
         java-version: 21
 
-    - name: Build all services (skip tests)
-      run: mvn clean package -DskipTests
+    - name: Build Amazon Server (skip tests)
+      run: mvn clean package -DskipTests -f amazon-server/pom.xml
+
+    - name: Build Product Service (skip tests)
+      run: mvn clean package -DskipTests -f product-service/pom.xml
+
+    - name: Build Order Service (skip tests)
+      run: mvn clean package -DskipTests -f order-service/pom.xml
 
     - name: Start Eureka Server
       run: java -jar amazon-server/target/amazon-server-0.0.1-SNAPSHOT.jar &
-      
+
     - name: Wait for Eureka server to be ready
       run: |
         for i in {1..30}; do
-          curl -s http://localhost:8761 || sleep 2
+          curl -s http://localhost:8761 && break || sleep 2
         done
 
     - name: Start Product Service
@@ -39,5 +45,8 @@ jobs:
     - name: Wait for services to register with Eureka
       run: sleep 20
 
-    - name: Run tests
-      run: mvn test
+    - name: Run tests for all services
+      run: |
+        mvn test -f amazon-server/pom.xml
+        mvn test -f product-service/pom.xml
+        mvn test -f order-service/pom.xml
