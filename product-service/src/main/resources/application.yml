@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: product-service
+    name: PRODUCT-SERVICE
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${SPRING_DATASOURCE_URL}
