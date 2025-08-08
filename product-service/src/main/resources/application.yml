@@ -1,9 +1,9 @@
 server:
-  port: 8884  # Change this per service
+  port: 8885  # Change this per service
 
 spring:
   application:
-    name: product-service  # e.g., product-service
+    name: productService  # e.g., product-service
   config:
     import: optional:configserver:http://localhost:8884  # Optional: if using Spring Cloud Config
 
