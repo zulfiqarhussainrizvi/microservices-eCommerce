@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.order.dto.ProductDto;
 
-@FeignClient(name = "productService", fallback = ProductClientFallback.class)
+@FeignClient(name = "product-service", fallback = ProductClientFallback.class)
 public interface ProductClient {
 
 	    @GetMapping("/api/products/view/{id}")

@@ -1,32 +1,17 @@
 server:
-  port: 8883  # Change this per service
+  port: 8883
 
 spring:
   application:
-    name: order-service  # e.g., product-service
-  config:
-    import: optional:configserver:http://localhost:8884  # Optional: if using Spring Cloud Config
+    name: order-service
 
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka/  # Eureka server URL
+      defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
-
-resilience4j:
-  circuitbreaker:
-    instances:
-      productService:
-        registerHealthIndicator: true
-        slidingWindowSize: 5
-        failureRateThreshold: 50
-        waitDurationInOpenState: 10s
-  retry:
-    instances:
-      productService:
-        maxAttempts: 3
-        waitDuration: 2s
-    
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}:${server.port}

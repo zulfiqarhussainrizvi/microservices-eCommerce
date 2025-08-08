@@ -30,8 +30,8 @@ public class OrderController {
 	
 	//If you want to avoid calling productClient in controller, let OrderService handle all FeignClient communication
 	@PostMapping
-	@Retry(name = "productService")
-	@CircuitBreaker(name = "productService", fallbackMethod = "fallbackProduct")
+	@Retry(name = "product-service")
+	@CircuitBreaker(name = "product-service", fallbackMethod = "fallbackProduct")
 	public String createOrder(@RequestBody Order order) {
 		ProductDto product = productClient.getProductByIdForFeign(order.getProductId());
 		orderService.placeOrder(product.getId(), order);
